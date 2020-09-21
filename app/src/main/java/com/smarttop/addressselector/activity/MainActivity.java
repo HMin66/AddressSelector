@@ -1,6 +1,7 @@
 package com.smarttop.addressselector.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -48,15 +49,15 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         //获取地址管理数据库
         addressDictManager = selector.getAddressDictManager();
 
-        selector.setTextSize(14);//设置字体的大小
+        selector.setTextSize(15);//设置字体的大小
 //        selector.setIndicatorBackgroundColor("#00ff00");
-        selector.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
 //        selector.setBackgroundColor(android.R.color.holo_red_light);//设置字体的背景
 
-        selector.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
+        selector.setIndicatorBackgroundColor("#3A7CF0");//设置指示器的颜色
+        selector.setTextSelectedColor(R.color.textSelectedColor);//设置字体获得焦点的颜色
+        selector.setTextUnSelectedColor(R.color.textUnSelectedColor);//设置字体没有获得焦点的颜色
 
-        selector.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
-
+        selector.setTitle("出发地");
 //        //获取数据库管理
         AddressDictManager addressDictManager = selector.getAddressDictManager();
         AdressBean.ChangeRecordsBean changeRecordsBean = new AdressBean.ChangeRecordsBean();
@@ -78,15 +79,17 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
     @Override
     public void onClick(View view) {
         if (dialog != null) {
+            dialog.setTitle("出发地");
             dialog.show();
         } else {
             dialog = new BottomDialog(this);
             dialog.setOnAddressSelectedListener(this);
             dialog.setDialogDismisListener(this);
-            dialog.setTextSize(14);//设置字体的大小
-            dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
-            dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
-            dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+            dialog.setTextSize(15);//设置字体的大小
+            dialog.setTitle("目的地");
+            dialog.setIndicatorBackgroundColor("#3A7CF0");//设置指示器的颜色
+            dialog.setTextSelectedColor(R.color.textSelectedColor);//设置字体获得焦点的颜色
+            dialog.setTextUnSelectedColor(R.color.textUnSelectedColor);//设置字体没有获得焦点的颜色
 //            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
             dialog.setSelectorAreaPositionListener(this);
             dialog.show();

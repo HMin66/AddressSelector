@@ -87,6 +87,13 @@ public class BottomDialog extends Dialog {
     public void setTextUnSelectedColor(int unSelectedColor){
         this.selector.setTextUnSelectedColor(unSelectedColor);
     }
+
+    /**
+     *设置标题
+     */
+    public void setTitle(String title){
+        this.selector.setTitle(title);
+    }
     /**
      * 设置字体的大小
      */

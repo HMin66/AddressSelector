@@ -82,7 +82,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private static final int WHAT_COUNTIES_PROVIDED = 2;
     private static final int WHAT_STREETS_PROVIDED = 3;
     private AddressDictManager addressDictManager;
-    private ImageView iv_colse;
+    private TextView tv_title;
+    private ImageView iv_close;
     private int selectedColor;
     private int unSelectedColor;
     public int provincePostion;
@@ -172,7 +173,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private void initViews() {
         view = inflater.inflate(R.layout.address_selector, null);
         this.progressBar = (ProgressBar) view.findViewById(R.id.progressBar);//进度条
-        this.iv_colse = (ImageView) view.findViewById(R.id.iv_colse);
+        this.tv_title = (TextView) view.findViewById(R.id.tv_title);
+        this.iv_close = (ImageView) view.findViewById(R.id.iv_close);
         this.listView = (ListView) view.findViewById(R.id.listView);//listview
         this.indicator = view.findViewById(R.id.indicator); //指示器
         this.layout_tab = (LinearLayout) view.findViewById(R.id.layout_tab);
@@ -187,22 +189,26 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         this.textViewStreet.setOnClickListener(new OnStreetTabClickListener());
 
         this.listView.setOnItemClickListener(this);
-        this.iv_colse.setOnClickListener(new onCloseClickListener());
+        this.iv_close.setOnClickListener(new onCloseClickListener());
         updateIndicator();
+    }
+
+    public void setTitle(String title){
+        tv_title.setText(title);
     }
 
     /**
      *设置字体选中的颜色
      */
      public void setTextSelectedColor(int selectedColor){
-            this.selectedColor = selectedColor;
+         this.selectedColor = selectedColor;
      }
 
     /**
      *设置字体没有选中的颜色
      */
     public void setTextUnSelectedColor(int unSelectedColor){
-            this.unSelectedColor = unSelectedColor;
+         this.unSelectedColor = unSelectedColor;
     }
     /**
      * 设置字体的大小
