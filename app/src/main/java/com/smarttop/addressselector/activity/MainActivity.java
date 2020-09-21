@@ -111,6 +111,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         tv_selector_area.setText(s);
         if (dialog != null) {
             dialog.dismiss();
+            dialog.resetData();
         }
 //        getSelectedArea();
     }
@@ -119,6 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
     public void dialogclose() {
         if(dialog!=null){
             dialog.dismiss();
+            dialog.resetData();
         }
     }
 

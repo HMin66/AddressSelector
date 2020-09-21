@@ -193,6 +193,28 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         updateIndicator();
     }
 
+    public void resetData(){
+        tabIndex = INDEX_TAB_PROVINCE;
+        provinceIndex = INDEX_INVALID; //省份的下标
+        cityIndex = INDEX_INVALID;//城市的下标
+        countyIndex = INDEX_INVALID;//乡镇的下标
+        streetIndex = INDEX_INVALID;//街道的下标
+        provinces = null;
+        cities = null;
+        counties = null;
+        streets = null;
+        provincePostion = 0;
+        cityPosition = 0;
+        countyPosition = 0;
+        streetPosition = 0;
+
+        textViewProvince.setText("请选择");
+        textViewCity.setText("请选择");
+        textViewCounty.setText("请选择");
+        textViewStreet.setText("请选择");
+        retrieveProvinces();
+    }
+
     public void setTitle(String title){
         tv_title.setText(title);
     }
@@ -322,28 +344,30 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
      * 更新字体的颜色
      */
     private void updateTabTextColor(){
-    if(tabIndex != INDEX_TAB_PROVINCE){
-        textViewProvince.setTextColor(context.getResources().getColor(selectedColor));
-    }else{
-        textViewProvince.setTextColor(context.getResources().getColor(unSelectedColor));
-    }
-    if(tabIndex != INDEX_TAB_CITY){
-        textViewCity.setTextColor(context.getResources().getColor(selectedColor));
-    }else{
-        textViewCity.setTextColor(context.getResources().getColor(unSelectedColor));
-    }
-    if(tabIndex != INDEX_TAB_COUNTY){
-        textViewCounty.setTextColor(context.getResources().getColor(selectedColor));
-    }else{
-        textViewCounty.setTextColor(context.getResources().getColor(unSelectedColor));
-    }
-    if(tabIndex != INDEX_TAB_STREET){
-        textViewStreet.setTextColor(context.getResources().getColor(selectedColor));
-    }else{
-        textViewStreet.setTextColor(context.getResources().getColor(unSelectedColor));
-    }
+        if(tabIndex != INDEX_TAB_PROVINCE){
+            textViewProvince.setTextColor(context.getResources().getColor(selectedColor));
+        }else{
+            textViewProvince.setTextColor(context.getResources().getColor(unSelectedColor));
+        }
 
-}
+        if(tabIndex != INDEX_TAB_CITY){
+            textViewCity.setTextColor(context.getResources().getColor(selectedColor));
+        }else{
+            textViewCity.setTextColor(context.getResources().getColor(unSelectedColor));
+        }
+
+        if(tabIndex != INDEX_TAB_COUNTY){
+            textViewCounty.setTextColor(context.getResources().getColor(selectedColor));
+        }else{
+            textViewCounty.setTextColor(context.getResources().getColor(unSelectedColor));
+        }
+
+        if(tabIndex != INDEX_TAB_STREET){
+            textViewStreet.setTextColor(context.getResources().getColor(selectedColor));
+        }else{
+            textViewStreet.setTextColor(context.getResources().getColor(unSelectedColor));
+        }
+    }
 
     /**
      * 点击省份的监听
@@ -430,6 +454,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
             }
         }
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (tabIndex) {
@@ -520,7 +545,6 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         progressBar.setVisibility(View.VISIBLE);
         List<Province> provinceList = addressDictManager.getProvinceList();
         handler.sendMessage(Message.obtain(handler, WHAT_PROVINCES_PROVIDED, provinceList));
-
     }
 
     /**
@@ -802,18 +826,22 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     public void setOnAddressSelectedListener(OnAddressSelectedListener listener) {
         this.listener = listener;
     }
+
     public interface OnDialogCloseListener{
         void dialogclose();
     }
+
     /**
      * 设置close监听
      */
     public void setOnDialogCloseListener(OnDialogCloseListener listener) {
         this.dialogCloseListener = listener;
     }
+
     public interface onSelectorAreaPositionListener{
         void selectorAreaPosition(int provincePosition,int cityPosition,int countyPosition,int streetPosition);
     }
+
     public void setOnSelectorAreaPositionListener(onSelectorAreaPositionListener listener){
         this.selectorAreaPositionListener = listener;
     }

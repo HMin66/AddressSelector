@@ -120,6 +120,13 @@ public class BottomDialog extends Dialog {
     }
 
     /**
+     * 清空数据
+     */
+    public void resetData(){
+        this.selector.resetData();
+    }
+
+    /**
      * 设置已选中的地区
      * @param provinceCode 省份code
      * @param provinPosition 省份所在的位置
