@@ -90,6 +90,11 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     public int cityPosition;
     public int countyPosition;
     public int streetPosition;
+
+    public boolean isShowCity;
+    public boolean isShowCounty;
+    public boolean isShowStreet;
+
     @SuppressWarnings("unchecked")
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -217,6 +222,12 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
     public void setTitle(String title){
         tv_title.setText(title);
+    }
+
+    public void isShow(boolean isShowCity, boolean isShowCounty, boolean isShowStreet){
+        this.isShowCity = isShowCity;
+        this.isShowCounty = isShowCounty;
+        this.isShowStreet = isShowStreet;
     }
 
     /**
@@ -554,6 +565,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private void retrieveCitiesWith(int provinceId) {
         progressBar.setVisibility(View.VISIBLE);
         List<City> cityList = addressDictManager.getCityList(provinceId);
+        if (!isShowCity){
+            cityList = null;
+        }
         handler.sendMessage(Message.obtain(handler, WHAT_CITIES_PROVIDED, cityList));
     }
 
@@ -564,6 +578,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private void retrieveCountiesWith(int cityId){
         progressBar.setVisibility(View.VISIBLE);
         List<County> countyList = addressDictManager.getCountyList(cityId);
+        if (!isShowCounty){
+            countyList = null;
+        }
         handler.sendMessage(Message.obtain(handler, WHAT_COUNTIES_PROVIDED, countyList));
     }
     /**
@@ -573,6 +590,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private void retrieveStreetsWith(int countyId) {
         progressBar.setVisibility(View.VISIBLE);
         List<Street> streetList = addressDictManager.getStreetList(countyId);
+        if (!isShowStreet){
+            streetList = null;
+        }
         handler.sendMessage(Message.obtain(handler, WHAT_STREETS_PROVIDED, streetList));
     }
 

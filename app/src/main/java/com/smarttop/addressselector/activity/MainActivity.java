@@ -92,6 +92,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
             dialog.setTextUnSelectedColor(R.color.textUnSelectedColor);//设置字体没有获得焦点的颜色
 //            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
             dialog.setSelectorAreaPositionListener(this);
+            dialog.isShow(true, true, false);
             dialog.show();
         }
     }

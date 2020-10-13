@@ -126,6 +126,10 @@ public class BottomDialog extends Dialog {
         this.selector.resetData();
     }
 
+    public void isShow(boolean isShowCity, boolean isShowCounty, boolean isShowStreet){
+        this.selector.isShow(isShowCity, isShowCounty, isShowStreet);
+    }
+
     /**
      * 设置已选中的地区
      * @param provinceCode 省份code
