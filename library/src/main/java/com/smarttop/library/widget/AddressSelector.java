@@ -30,6 +30,7 @@ import com.smarttop.library.db.manager.AddressDictManager;
 import com.smarttop.library.utils.Lists;
 import com.smarttop.library.utils.LogUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -163,6 +164,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         initViews();
         initAdapters();
         retrieveProvinces();
+        AddressData.init();
     }
 
     /**
@@ -478,7 +480,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
                 //根据省份的id,从数据库中查询城市列表
-                retrieveCitiesWith(province.id);
+                retrieveCitiesWith(province.name);
 
                 // 清空子级数据
                 cities = null;
@@ -502,7 +504,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
                 //根据城市的id,从数据库中查询城市列表
-                retrieveCountiesWith(city.id);
+                retrieveCountiesWith(city.name);
                 // 清空子级数据
                 counties = null;
                 streets = null;
@@ -554,17 +556,27 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
      */
     private void retrieveProvinces() {
         progressBar.setVisibility(View.VISIBLE);
-        List<Province> provinceList = addressDictManager.getProvinceList();
+//        List<Province> provinceList = addressDictManager.getProvinceList();
+        List<Province> provinceList = new ArrayList<>();
+        int index = 0;
+        for (String province: AddressData.privinceList) {
+            provinceList.add(new Province(index++, province));
+        }
         handler.sendMessage(Message.obtain(handler, WHAT_PROVINCES_PROVIDED, provinceList));
     }
 
     /**
      * 根据省份id查询城市列表
-     * @param provinceId  省份id
+     * @param province  省份
      */
-    private void retrieveCitiesWith(int provinceId) {
+    private void retrieveCitiesWith(String province) {
         progressBar.setVisibility(View.VISIBLE);
-        List<City> cityList = addressDictManager.getCityList(provinceId);
+//        List<City> cityList = addressDictManager.getCityList(provinceId);
+        List<City> cityList = new ArrayList<>();
+        int index = 0;
+        for (String city: AddressData.cityList.get(province)) {
+            cityList.add(new City(index++, city));
+        }
         if (!isShowCity){
             cityList = null;
         }
@@ -573,11 +585,16 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
     /**
      * 根据城市id查询乡镇列表
-     * @param cityId 城市id
+     * @param city 城市
      */
-    private void retrieveCountiesWith(int cityId){
+    private void retrieveCountiesWith(String city){
         progressBar.setVisibility(View.VISIBLE);
-        List<County> countyList = addressDictManager.getCountyList(cityId);
+//        List<County> countyList = addressDictManager.getCountyList(cityId);
+        List<County> countyList = new ArrayList<>();
+        int index = 0;
+        for (String county: AddressData.countyList.get(city)) {
+            countyList.add(new County(index++, county));
+        }
         if (!isShowCounty){
             countyList = null;
         }
@@ -643,7 +660,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
         @Override
         public long getItemId(int position) {
-            return getItem(position).id;
+            return position;
         }
 
         @Override
@@ -695,7 +712,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
         @Override
         public long getItemId(int position) {
-            return getItem(position).id;
+            return position;
         }
 
         @Override
@@ -747,7 +764,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
         @Override
         public long getItemId(int position) {
-            return getItem(position).id;
+            return position;
         }
 
         @Override
@@ -880,7 +897,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
             LogUtil.d("数据", "省份=" + province);
             // 更新当前级别及子级标签文本
             //根据省份的id,从数据库中查询城市列表
-            retrieveCitiesWith(province.id);
+            retrieveCitiesWith(province.name);
 
             // 清空子级数据
             cities = null;
@@ -902,7 +919,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
             textViewCity.setText(city.name);
             LogUtil.d("数据", "城市=" + city.name);
             //根据城市的id,从数据库中查询城市列表
-            retrieveCountiesWith(city.id);
+            retrieveCountiesWith(city.name);
             // 清空子级数据
             counties = null;
             streets = null;

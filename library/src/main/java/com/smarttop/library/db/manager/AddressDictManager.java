@@ -129,7 +129,7 @@ public class AddressDictManager {
         List<Province> provinceList = new ArrayList<>();
         Cursor cursor = db.rawQuery("select * from " + TableField.TABLE_ADDRESS_DICT+" where "+ ADDRESS_DICT_FIELD_PARENTID+"=?", new String[]{String.valueOf(0)});
         while (cursor.moveToNext()){
-            Province province =  new Province();
+            Province province = new Province();
             province.id = cursor.getInt(cursor.getColumnIndex(ADDRESS_DICT_FIELD_ID));
             province.code = cursor.getString(cursor.getColumnIndex(ADDRESS_DICT_FIELD_CODE));
             province.name = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_NAME));
